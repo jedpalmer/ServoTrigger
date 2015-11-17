@@ -65,6 +65,12 @@
         reaches the end of the transit.
      - scalePhasor translates the 0 to 0xffff value to pulse width, in microseconds.
  
+ MODIFIED 2015-11-17
+ by Jed Palmer
+ 
+ Added sleep timer to kill all activity after set time period. This allows the servo 
+ trigger to run for a while and turn itself off so it doesn't carry on indefinitely.
+ This timer is reset by power cycling. 
  */ 
 
 #include <avr/io.h>
@@ -111,6 +117,7 @@ static const int32_t PWM_RANGE_USEC = 1600; // diff between min and max PWM puls
 
 static const int32_t ADC_MAX        = 0x0000ffff; // ADC values are left-justified into 16-bits
 static const int32_t PHASOR_MAX     = 0x0000ffff; // Phasor counts from 0 to 0xffff
+static const int32_t SLEEP_CTR		= 100;	// Number of cycles servo makes before we shut everything off
 
 // declare some constants for calculations
 //
@@ -168,6 +175,8 @@ typedef struct status
 	bool    rising; // are we rising or falling?
 	
 	int32_t us_val; // how many microseconds to add to the PWM pulse?
+	
+	int32_t sleepctr; //how many times have we cycled? used only in astable FSM
 	
 }status;
 
@@ -713,6 +722,7 @@ void astableFSM()
         	{
             	current_status.st = eATOB;
   	        	current_status.rising         = true;
+				current_status.sleepctr++
         	}
     	}
     	break;
@@ -834,6 +844,13 @@ ISR(TIM1_CAPT_vect)
 
 	// Then read and prepare for next invocation	
 	readInputs();
+	
+	//check sleep counter and disable PWM and interupts
+	if(current_status.sleepctr > SLEEP_CTR)
+	{
+		cli();
+		
+	}
 
 }
 
@@ -946,6 +963,7 @@ int main(void)
 	current_status.st     = eIDLE;
 	current_status.phasor = 0;
 	current_status.rising = true;
+	current_status.sleepctr = 0;
 
 	// Read all of the inputs one before we enable the FSM,
 	// so it doesn't start with invalid data.
