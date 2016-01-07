@@ -117,7 +117,7 @@ static const int32_t PWM_RANGE_USEC = 1600; // diff between min and max PWM puls
 
 static const int32_t ADC_MAX        = 0x0000ffff; // ADC values are left-justified into 16-bits
 static const int32_t PHASOR_MAX     = 0x0000ffff; // Phasor counts from 0 to 0xffff
-static const int32_t SLEEP_CTR		= 100;	// Number of cycles servo makes before we shut everything off
+static const int32_t SLEEP_CTR		= 300;	// Number of cycles servo makes before we shut everything off
 
 // declare some constants for calculations
 //
@@ -671,23 +671,17 @@ void astableFSM()
 	{
     	case eIDLE:
     	{
-        	// Advance when we see the switch actuate
-        	if(current_status.input == true)
-        	{
-            	current_status.st = eATOB;
-            	current_status.rising         = true;
-        	}
+        	// Advance regardless of switch state
+        	
+            current_status.st = eATOB;
+            current_status.rising         = true;
+        	
     	}
     	break;
     	case eATOB:
     	{
-            // input goes away?  Stop where we are.
-        	if(current_status.input == false)
-        	{
-            	current_status.st = eIDLE;
-            	current_status.rising         = false;
-        	}
-        	else if( calcNextPhasor(delta) )
+            //when we hit the top, go to falling state
+			if( calcNextPhasor(delta) )
         	{
             	current_status.st = eBTOA;
             	current_status.rising         = false;
@@ -713,16 +707,11 @@ void astableFSM()
     	{
         	// dropping down to A
         	// only quits when it gets there - ignores switch
-        	if(current_status.input == false)
-	        	{
-    	        	current_status.st = eIDLE;
-    	        	current_status.rising         = false;
-	        	}
-            else if( calcNextPhasor(delta) )
+        	if( calcNextPhasor(delta) )
         	{
             	current_status.st = eATOB;
   	        	current_status.rising         = true;
-				current_status.sleepctr++
+				current_status.sleepctr++;
         	}
     	}
     	break;
@@ -848,8 +837,16 @@ ISR(TIM1_CAPT_vect)
 	//check sleep counter and disable PWM and interupts
 	if(current_status.sleepctr > SLEEP_CTR)
 	{
+		//disable interrupts
 		cli();
 		
+		//disable PWM on channel A
+		TCCR1A = 0;
+		
+		//set all output to low
+		PORTA = 0;
+		
+		//
 	}
 
 }

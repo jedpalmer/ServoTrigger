@@ -1,0 +1,1380 @@
+
+ServoTrigger.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000006d6  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000022  00800060  000006d6  0000076a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          0000001e  00800082  00800082  0000078c  2**0
+                  ALLOC
+  3 .debug_aranges 00000088  00000000  00000000  0000078c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 000000ee  00000000  00000000  00000814  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000004d8  00000000  00000000  00000902  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000225  00000000  00000000  00000dda  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000739  00000000  00000000  00000fff  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000f0  00000000  00000000  00001738  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000289  00000000  00000000  00001828  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000220  00000000  00000000  00001ab1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000080  00000000  00000000  00001cd1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+	It then transits back to A, again taking time T.
+
+    On every invocation, it will update the microsecond value in current_status.
+*/
+void bistableFSM()
+{
+   0:	10 c0       	rjmp	.+32     	; 0x22 <__ctors_end>
+   2:	2a c0       	rjmp	.+84     	; 0x58 <__bad_interrupt>
+   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
+   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
+   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
+   a:	59 c2       	rjmp	.+1202   	; 0x4be <__vector_5>
+   c:	25 c0       	rjmp	.+74     	; 0x58 <__bad_interrupt>
+   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
+  10:	23 c0       	rjmp	.+70     	; 0x58 <__bad_interrupt>
+  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
+  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
+  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
+  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
+  1a:	1e c0       	rjmp	.+60     	; 0x58 <__bad_interrupt>
+  1c:	1d c0       	rjmp	.+58     	; 0x58 <__bad_interrupt>
+  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
+  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+
+00000022 <__ctors_end>:
+  22:	11 24       	eor	r1, r1
+  24:	1f be       	out	0x3f, r1	; 63
+  26:	cf e5       	ldi	r28, 0x5F	; 95
+  28:	d2 e0       	ldi	r29, 0x02	; 2
+  2a:	de bf       	out	0x3e, r29	; 62
+  2c:	cd bf       	out	0x3d, r28	; 61
+
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	e6 ed       	ldi	r30, 0xD6	; 214
+  36:	f6 e0       	ldi	r31, 0x06	; 6
+  38:	02 c0       	rjmp	.+4      	; 0x3e <.do_copy_data_start>
+
+0000003a <.do_copy_data_loop>:
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+
+0000003e <.do_copy_data_start>:
+  3e:	a2 38       	cpi	r26, 0x82	; 130
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <.do_copy_data_loop>
+
+00000044 <__do_clear_bss>:
+  44:	10 e0       	ldi	r17, 0x00	; 0
+  46:	a2 e8       	ldi	r26, 0x82	; 130
+  48:	b0 e0       	ldi	r27, 0x00	; 0
+  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
+
+0000004c <.do_clear_bss_loop>:
+  4c:	1d 92       	st	X+, r1
+
+0000004e <.do_clear_bss_start>:
+  4e:	a0 3a       	cpi	r26, 0xA0	; 160
+  50:	b1 07       	cpc	r27, r17
+  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
+  54:	98 d2       	rcall	.+1328   	; 0x586 <main>
+  56:	3d c3       	rjmp	.+1658   	; 0x6d2 <_exit>
+
+00000058 <__bad_interrupt>:
+  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
+
+0000005a <calcDelta>:
+	MS nybble indexes LUT value.
+	Also reads the next adjacent LUT value, then uses next nybble to 
+	fo linear interoplation between them.
+*/
+int16_t calcDelta()
+{
+  5a:	0f 93       	push	r16
+  5c:	1f 93       	push	r17
+  5e:	df 93       	push	r29
+  60:	cf 93       	push	r28
+  62:	00 d0       	rcall	.+0      	; 0x64 <calcDelta+0xa>
+  64:	cd b7       	in	r28, 0x3d	; 61
+  66:	de b7       	in	r29, 0x3e	; 62
+	// time reading is 12 bits, formatted into the top of 
+	// a 16-bit value.
+	// We'll use the 4 MSBs to look up a time value,
+	// and the next 4 to do linear interpolation between it and the next value.
+
+	uint8_t idx = current_status.t >> 12;
+  68:	60 91 8b 00 	lds	r22, 0x008B
+  6c:	70 91 8c 00 	lds	r23, 0x008C
+  70:	80 91 8d 00 	lds	r24, 0x008D
+  74:	90 91 8e 00 	lds	r25, 0x008E
+	int16_t val = timelut[idx];
+  78:	9b 01       	movw	r18, r22
+  7a:	ac 01       	movw	r20, r24
+  7c:	01 2e       	mov	r0, r17
+  7e:	1c e0       	ldi	r17, 0x0C	; 12
+  80:	55 95       	asr	r21
+  82:	47 95       	ror	r20
+  84:	37 95       	ror	r19
+  86:	27 95       	ror	r18
+  88:	1a 95       	dec	r17
+  8a:	d1 f7       	brne	.-12     	; 0x80 <calcDelta+0x26>
+  8c:	10 2d       	mov	r17, r0
+  8e:	30 e0       	ldi	r19, 0x00	; 0
+  90:	a0 e6       	ldi	r26, 0x60	; 96
+  92:	b0 e0       	ldi	r27, 0x00	; 0
+  94:	f9 01       	movw	r30, r18
+  96:	ee 0f       	add	r30, r30
+  98:	ff 1f       	adc	r31, r31
+  9a:	ea 0f       	add	r30, r26
+  9c:	fb 1f       	adc	r31, r27
+  9e:	00 81       	ld	r16, Z
+  a0:	11 81       	ldd	r17, Z+1	; 0x01
+	
+	// Calc window between this and next value
+	volatile int16_t window = timelut[idx+1] - timelut[idx];
+  a2:	2f 5f       	subi	r18, 0xFF	; 255
+  a4:	3f 4f       	sbci	r19, 0xFF	; 255
+  a6:	22 0f       	add	r18, r18
+  a8:	33 1f       	adc	r19, r19
+  aa:	a2 0f       	add	r26, r18
+  ac:	b3 1f       	adc	r27, r19
+  ae:	2d 91       	ld	r18, X+
+  b0:	3c 91       	ld	r19, X
+  b2:	20 1b       	sub	r18, r16
+  b4:	31 0b       	sbc	r19, r17
+  b6:	3a 83       	std	Y+2, r19	; 0x02
+  b8:	29 83       	std	Y+1, r18	; 0x01
+
+	// split that window into 16 chunks
+	window >>= 4;  // IE: divide by 16
+  ba:	29 81       	ldd	r18, Y+1	; 0x01
+  bc:	3a 81       	ldd	r19, Y+2	; 0x02
+  be:	35 95       	asr	r19
+  c0:	27 95       	ror	r18
+  c2:	35 95       	asr	r19
+  c4:	27 95       	ror	r18
+  c6:	35 95       	asr	r19
+  c8:	27 95       	ror	r18
+  ca:	35 95       	asr	r19
+  cc:	27 95       	ror	r18
+  ce:	3a 83       	std	Y+2, r19	; 0x02
+  d0:	29 83       	std	Y+1, r18	; 0x01
+	
+	// and take the number of chunks as determined by the next 4 bits
+	window *= ((current_status.t & 0x00000f00) >> 8);
+  d2:	29 81       	ldd	r18, Y+1	; 0x01
+  d4:	3a 81       	ldd	r19, Y+2	; 0x02
+  d6:	60 70       	andi	r22, 0x00	; 0
+  d8:	7f 70       	andi	r23, 0x0F	; 15
+  da:	80 70       	andi	r24, 0x00	; 0
+  dc:	90 70       	andi	r25, 0x00	; 0
+  de:	67 2f       	mov	r22, r23
+  e0:	78 2f       	mov	r23, r24
+  e2:	89 2f       	mov	r24, r25
+  e4:	99 27       	eor	r25, r25
+  e6:	87 fd       	sbrc	r24, 7
+  e8:	9a 95       	dec	r25
+  ea:	44 27       	eor	r20, r20
+  ec:	37 fd       	sbrc	r19, 7
+  ee:	40 95       	com	r20
+  f0:	54 2f       	mov	r21, r20
+  f2:	99 d2       	rcall	.+1330   	; 0x626 <__mulsi3>
+  f4:	7a 83       	std	Y+2, r23	; 0x02
+  f6:	69 83       	std	Y+1, r22	; 0x01
+
+	return val + window;
+  f8:	89 81       	ldd	r24, Y+1	; 0x01
+  fa:	9a 81       	ldd	r25, Y+2	; 0x02
+  fc:	08 0f       	add	r16, r24
+  fe:	19 1f       	adc	r17, r25
+
+}
+ 100:	80 2f       	mov	r24, r16
+ 102:	91 2f       	mov	r25, r17
+ 104:	0f 90       	pop	r0
+ 106:	0f 90       	pop	r0
+ 108:	cf 91       	pop	r28
+ 10a:	df 91       	pop	r29
+ 10c:	1f 91       	pop	r17
+ 10e:	0f 91       	pop	r16
+ 110:	08 95       	ret
+
+00000112 <calcNextPhasor>:
+    The trick is that it will be scaled based on the pot settings before being applied.
+
+    Returns true when segment overflows, to advance FSM.
+*/
+bool calcNextPhasor(int16_t increment)
+{
+ 112:	bc 01       	movw	r22, r24
+	if(current_status.rising)
+ 114:	80 91 97 00 	lds	r24, 0x0097
+ 118:	88 23       	and	r24, r24
+ 11a:	a1 f0       	breq	.+40     	; 0x144 <calcNextPhasor+0x32>
+	{
+		current_status.phasor += increment;
+ 11c:	e3 e9       	ldi	r30, 0x93	; 147
+ 11e:	f0 e0       	ldi	r31, 0x00	; 0
+ 120:	cb 01       	movw	r24, r22
+ 122:	aa 27       	eor	r26, r26
+ 124:	97 fd       	sbrc	r25, 7
+ 126:	a0 95       	com	r26
+ 128:	ba 2f       	mov	r27, r26
+ 12a:	20 81       	ld	r18, Z
+ 12c:	31 81       	ldd	r19, Z+1	; 0x01
+ 12e:	42 81       	ldd	r20, Z+2	; 0x02
+ 130:	53 81       	ldd	r21, Z+3	; 0x03
+ 132:	82 0f       	add	r24, r18
+ 134:	93 1f       	adc	r25, r19
+ 136:	a4 1f       	adc	r26, r20
+ 138:	b5 1f       	adc	r27, r21
+ 13a:	80 83       	st	Z, r24
+ 13c:	91 83       	std	Z+1, r25	; 0x01
+ 13e:	a2 83       	std	Z+2, r26	; 0x02
+ 140:	b3 83       	std	Z+3, r27	; 0x03
+ 142:	13 c0       	rjmp	.+38     	; 0x16a <calcNextPhasor+0x58>
+	}
+	else
+	{
+		current_status.phasor -= increment;
+ 144:	e3 e9       	ldi	r30, 0x93	; 147
+ 146:	f0 e0       	ldi	r31, 0x00	; 0
+ 148:	9b 01       	movw	r18, r22
+ 14a:	44 27       	eor	r20, r20
+ 14c:	37 fd       	sbrc	r19, 7
+ 14e:	40 95       	com	r20
+ 150:	54 2f       	mov	r21, r20
+ 152:	80 81       	ld	r24, Z
+ 154:	91 81       	ldd	r25, Z+1	; 0x01
+ 156:	a2 81       	ldd	r26, Z+2	; 0x02
+ 158:	b3 81       	ldd	r27, Z+3	; 0x03
+ 15a:	82 1b       	sub	r24, r18
+ 15c:	93 0b       	sbc	r25, r19
+ 15e:	a4 0b       	sbc	r26, r20
+ 160:	b5 0b       	sbc	r27, r21
+ 162:	80 83       	st	Z, r24
+ 164:	91 83       	std	Z+1, r25	; 0x01
+ 166:	a2 83       	std	Z+2, r26	; 0x02
+ 168:	b3 83       	std	Z+3, r27	; 0x03
+	}
+	
+	// check for over/underflow indicating end of segment reached.
+	// If so, truncate & return...
+	if(current_status.phasor > PHASOR_MAX)
+ 16a:	80 91 93 00 	lds	r24, 0x0093
+ 16e:	90 91 94 00 	lds	r25, 0x0094
+ 172:	a0 91 95 00 	lds	r26, 0x0095
+ 176:	b0 91 96 00 	lds	r27, 0x0096
+ 17a:	80 30       	cpi	r24, 0x00	; 0
+ 17c:	20 e0       	ldi	r18, 0x00	; 0
+ 17e:	92 07       	cpc	r25, r18
+ 180:	21 e0       	ldi	r18, 0x01	; 1
+ 182:	a2 07       	cpc	r26, r18
+ 184:	20 e0       	ldi	r18, 0x00	; 0
+ 186:	b2 07       	cpc	r27, r18
+ 188:	74 f0       	brlt	.+28     	; 0x1a6 <calcNextPhasor+0x94>
+	{
+		current_status.phasor = PHASOR_MAX;
+ 18a:	8f ef       	ldi	r24, 0xFF	; 255
+ 18c:	9f ef       	ldi	r25, 0xFF	; 255
+ 18e:	a0 e0       	ldi	r26, 0x00	; 0
+ 190:	b0 e0       	ldi	r27, 0x00	; 0
+ 192:	80 93 93 00 	sts	0x0093, r24
+ 196:	90 93 94 00 	sts	0x0094, r25
+ 19a:	a0 93 95 00 	sts	0x0095, r26
+ 19e:	b0 93 96 00 	sts	0x0096, r27
+ 1a2:	81 e0       	ldi	r24, 0x01	; 1
+ 1a4:	08 95       	ret
+		return true;		
+	}
+	else if(current_status.phasor < 0)
+ 1a6:	bb 23       	and	r27, r27
+ 1a8:	14 f0       	brlt	.+4      	; 0x1ae <calcNextPhasor+0x9c>
+ 1aa:	80 e0       	ldi	r24, 0x00	; 0
+ 1ac:	08 95       	ret
+	{
+		current_status.phasor = 0;
+ 1ae:	10 92 93 00 	sts	0x0093, r1
+ 1b2:	10 92 94 00 	sts	0x0094, r1
+ 1b6:	10 92 95 00 	sts	0x0095, r1
+ 1ba:	10 92 96 00 	sts	0x0096, r1
+ 1be:	81 e0       	ldi	r24, 0x01	; 1
+		return true;		
+	}
+	
+	return false;
+}
+ 1c0:	08 95       	ret
+
+000001c2 <scalePhasor>:
+    But A and B may by nearer to each other than that
+    and B might even be less than A, reversing things overall.
+    This routine centralizes that translation.
+*/
+int16_t scalePhasor()
+{
+ 1c2:	af 92       	push	r10
+ 1c4:	bf 92       	push	r11
+ 1c6:	cf 92       	push	r12
+ 1c8:	df 92       	push	r13
+ 1ca:	ef 92       	push	r14
+ 1cc:	ff 92       	push	r15
+ 1ce:	0f 93       	push	r16
+ 1d0:	1f 93       	push	r17
+
+	// a, b are 16-bit unsigned values	
+	// range and offset are 32-bit signed.
+    // When a > b, range is negative
+	// thus the ultimate result will be subtracted from the offset.
+	range = current_status.b - current_status.a;
+ 1d2:	03 e8       	ldi	r16, 0x83	; 131
+ 1d4:	10 e0       	ldi	r17, 0x00	; 0
+ 1d6:	f8 01       	movw	r30, r16
+ 1d8:	a1 90       	ld	r10, Z+
+ 1da:	b1 90       	ld	r11, Z+
+ 1dc:	c1 90       	ld	r12, Z+
+ 1de:	d1 90       	ld	r13, Z+
+	offset = current_status.a;
+	
+	//Scale range and offset into uSec values.
+	range = (range * PWM_RANGE_USEC)/ADC_MAX;
+ 1e0:	60 81       	ld	r22, Z
+ 1e2:	71 81       	ldd	r23, Z+1	; 0x01
+ 1e4:	82 81       	ldd	r24, Z+2	; 0x02
+ 1e6:	93 81       	ldd	r25, Z+3	; 0x03
+ 1e8:	6a 19       	sub	r22, r10
+ 1ea:	7b 09       	sbc	r23, r11
+ 1ec:	8c 09       	sbc	r24, r12
+ 1ee:	9d 09       	sbc	r25, r13
+ 1f0:	28 ee       	ldi	r18, 0xE8	; 232
+ 1f2:	33 e0       	ldi	r19, 0x03	; 3
+ 1f4:	40 e0       	ldi	r20, 0x00	; 0
+ 1f6:	50 e0       	ldi	r21, 0x00	; 0
+ 1f8:	16 d2       	rcall	.+1068   	; 0x626 <__mulsi3>
+ 1fa:	9b 01       	movw	r18, r22
+ 1fc:	ac 01       	movw	r20, r24
+	offset = (offset * PWM_RANGE_USEC)/ADC_MAX;
+		
+	// scale phasor into range
+	result = (current_status.phasor * range)/PHASOR_MAX;
+ 1fe:	73 2f       	mov	r23, r19
+ 200:	84 2f       	mov	r24, r20
+ 202:	95 2f       	mov	r25, r21
+ 204:	2f ef       	ldi	r18, 0xFF	; 255
+ 206:	3f ef       	ldi	r19, 0xFF	; 255
+ 208:	40 e0       	ldi	r20, 0x00	; 0
+ 20a:	50 e0       	ldi	r21, 0x00	; 0
+ 20c:	25 d2       	rcall	.+1098   	; 0x658 <__divmodsi4>
+ 20e:	ca 01       	movw	r24, r20
+ 210:	b9 01       	movw	r22, r18
+ 212:	f8 01       	movw	r30, r16
+ 214:	20 89       	ldd	r18, Z+16	; 0x10
+ 216:	31 89       	ldd	r19, Z+17	; 0x11
+ 218:	42 89       	ldd	r20, Z+18	; 0x12
+ 21a:	53 89       	ldd	r21, Z+19	; 0x13
+ 21c:	04 d2       	rcall	.+1032   	; 0x626 <__mulsi3>
+ 21e:	2f ef       	ldi	r18, 0xFF	; 255
+ 220:	3f ef       	ldi	r19, 0xFF	; 255
+ 222:	40 e0       	ldi	r20, 0x00	; 0
+ 224:	50 e0       	ldi	r21, 0x00	; 0
+ 226:	18 d2       	rcall	.+1072   	; 0x658 <__divmodsi4>
+ 228:	e2 2e       	mov	r14, r18
+ 22a:	f3 2e       	mov	r15, r19
+ 22c:	04 2f       	mov	r16, r20
+ 22e:	15 2f       	mov	r17, r21
+ 230:	c6 01       	movw	r24, r12
+ 232:	b5 01       	movw	r22, r10
+ 234:	28 ee       	ldi	r18, 0xE8	; 232
+ 236:	33 e0       	ldi	r19, 0x03	; 3
+ 238:	40 e0       	ldi	r20, 0x00	; 0
+ 23a:	50 e0       	ldi	r21, 0x00	; 0
+ 23c:	f4 d1       	rcall	.+1000   	; 0x626 <__mulsi3>
+ 23e:	2f ef       	ldi	r18, 0xFF	; 255
+ 240:	3f ef       	ldi	r19, 0xFF	; 255
+ 242:	40 e0       	ldi	r20, 0x00	; 0
+ 244:	50 e0       	ldi	r21, 0x00	; 0
+ 246:	08 d2       	rcall	.+1040   	; 0x658 <__divmodsi4>
+ 248:	e2 0e       	add	r14, r18
+ 24a:	f3 1e       	adc	r15, r19
+ 24c:	04 1f       	adc	r16, r20
+ 24e:	15 1f       	adc	r17, r21
+	//add on offset
+    // (or subtract, if a > b)
+	result += offset;
+
+	return result;
+}
+ 250:	8e 2d       	mov	r24, r14
+ 252:	9f 2d       	mov	r25, r15
+ 254:	1f 91       	pop	r17
+ 256:	0f 91       	pop	r16
+ 258:	ff 90       	pop	r15
+ 25a:	ef 90       	pop	r14
+ 25c:	df 90       	pop	r13
+ 25e:	cf 90       	pop	r12
+ 260:	bf 90       	pop	r11
+ 262:	af 90       	pop	r10
+ 264:	08 95       	ret
+
+00000266 <edgeDetect>:
+*/
+bool edgeDetect()
+{
+    static uint8_t deb_count = 0;
+
+    if(current_status.input == 0)
+ 266:	80 91 8f 00 	lds	r24, 0x008F
+ 26a:	88 23       	and	r24, r24
+ 26c:	19 f4       	brne	.+6      	; 0x274 <edgeDetect+0xe>
+    {
+        deb_count = 0;
+ 26e:	10 92 82 00 	sts	0x0082, r1
+ 272:	08 95       	ret
+    }
+    else if(current_status.input == 1)
+    {
+        
+        // increment counter
+        deb_count++;
+ 274:	80 91 82 00 	lds	r24, 0x0082
+ 278:	8f 5f       	subi	r24, 0xFF	; 255
+ 27a:	80 93 82 00 	sts	0x0082, r24
+                
+        if(deb_count == 2)
+ 27e:	82 30       	cpi	r24, 0x02	; 2
+ 280:	11 f4       	brne	.+4      	; 0x286 <edgeDetect+0x20>
+ 282:	81 e0       	ldi	r24, 0x01	; 1
+ 284:	08 95       	ret
+        {
+            // we call 2 in a row a rising edge
+            return true;            
+        }
+        else if(deb_count >= 3)
+ 286:	83 30       	cpi	r24, 0x03	; 3
+ 288:	10 f4       	brcc	.+4      	; 0x28e <edgeDetect+0x28>
+ 28a:	80 e0       	ldi	r24, 0x00	; 0
+ 28c:	08 95       	ret
+        {
+            // make it stick at 3 so it can't overflow
+            deb_count = 3;
+ 28e:	83 e0       	ldi	r24, 0x03	; 3
+ 290:	80 93 82 00 	sts	0x0082, r24
+ 294:	80 e0       	ldi	r24, 0x00	; 0
+        }
+    }
+
+    return false;
+}
+ 296:	08 95       	ret
+
+00000298 <togglingFSM>:
+    It might be useful with continuous rotation servos, which could drive 
+    back and forth, changing direction with each input.  
+    Automated camera slider, maybe?
+    */
+void togglingFSM()
+{
+ 298:	cf 93       	push	r28
+ 29a:	df 93       	push	r29
+    int16_t delta;
+    
+    delta = calcDelta();
+ 29c:	de de       	rcall	.-580    	; 0x5a <calcDelta>
+ 29e:	ec 01       	movw	r28, r24
+    
+    bool edge = edgeDetect();
+ 2a0:	e2 df       	rcall	.-60     	; 0x266 <edgeDetect>
+    
+    switch(current_status.st)
+ 2a2:	90 91 92 00 	lds	r25, 0x0092
+ 2a6:	91 30       	cpi	r25, 0x01	; 1
+ 2a8:	79 f0       	breq	.+30     	; 0x2c8 <togglingFSM+0x30>
+ 2aa:	91 30       	cpi	r25, 0x01	; 1
+ 2ac:	28 f0       	brcs	.+10     	; 0x2b8 <togglingFSM+0x20>
+ 2ae:	92 30       	cpi	r25, 0x02	; 2
+ 2b0:	d1 f0       	breq	.+52     	; 0x2e6 <togglingFSM+0x4e>
+ 2b2:	93 30       	cpi	r25, 0x03	; 3
+ 2b4:	01 f1       	breq	.+64     	; 0x2f6 <togglingFSM+0x5e>
+ 2b6:	2d c0       	rjmp	.+90     	; 0x312 <togglingFSM+0x7a>
+    {
+        case eIDLE: 
+        {
+            // Advance when we see the switch actuate
+            if(edge)
+ 2b8:	88 23       	and	r24, r24
+ 2ba:	61 f1       	breq	.+88     	; 0x314 <togglingFSM+0x7c>
+            {
+                current_status.st = eATOB;
+ 2bc:	e2 e9       	ldi	r30, 0x92	; 146
+ 2be:	f0 e0       	ldi	r31, 0x00	; 0
+ 2c0:	81 e0       	ldi	r24, 0x01	; 1
+ 2c2:	80 83       	st	Z, r24
+                current_status.rising         = true;
+ 2c4:	85 83       	std	Z+5, r24	; 0x05
+ 2c6:	26 c0       	rjmp	.+76     	; 0x314 <togglingFSM+0x7c>
+        break;
+        case eATOB:
+        {
+            // rising to B,
+            // but if we see new edge, return to A.
+            if(edge)
+ 2c8:	88 23       	and	r24, r24
+ 2ca:	29 f0       	breq	.+10     	; 0x2d6 <togglingFSM+0x3e>
+            {
+                current_status.st     = eBTOA;
+ 2cc:	e2 e9       	ldi	r30, 0x92	; 146
+ 2ce:	f0 e0       	ldi	r31, 0x00	; 0
+ 2d0:	83 e0       	ldi	r24, 0x03	; 3
+ 2d2:	80 83       	st	Z, r24
+                current_status.rising = false;
+ 2d4:	15 82       	std	Z+5, r1	; 0x05
+            }
+            if( calcNextPhasor(delta) )
+ 2d6:	ce 01       	movw	r24, r28
+ 2d8:	1c df       	rcall	.-456    	; 0x112 <calcNextPhasor>
+ 2da:	88 23       	and	r24, r24
+ 2dc:	d9 f0       	breq	.+54     	; 0x314 <togglingFSM+0x7c>
+            {
+                current_status.st = eATTOP;
+ 2de:	82 e0       	ldi	r24, 0x02	; 2
+ 2e0:	80 93 92 00 	sts	0x0092, r24
+ 2e4:	17 c0       	rjmp	.+46     	; 0x314 <togglingFSM+0x7c>
+        }
+        break;
+        case eATTOP:
+        {
+            // Advance when we see the switch actuate
+            if(edge)
+ 2e6:	88 23       	and	r24, r24
+ 2e8:	a9 f0       	breq	.+42     	; 0x314 <togglingFSM+0x7c>
+            {
+                current_status.st = eBTOA;
+ 2ea:	e2 e9       	ldi	r30, 0x92	; 146
+ 2ec:	f0 e0       	ldi	r31, 0x00	; 0
+ 2ee:	83 e0       	ldi	r24, 0x03	; 3
+ 2f0:	80 83       	st	Z, r24
+                current_status.rising         = false;
+ 2f2:	15 82       	std	Z+5, r1	; 0x05
+ 2f4:	0f c0       	rjmp	.+30     	; 0x314 <togglingFSM+0x7c>
+        break;
+        case eBTOA:
+        {
+            // dropping down to A,
+            // but if we see new edge, return to B.
+            if(edge)
+ 2f6:	88 23       	and	r24, r24
+ 2f8:	29 f0       	breq	.+10     	; 0x304 <togglingFSM+0x6c>
+            {
+                current_status.st     = eATOB;
+ 2fa:	e2 e9       	ldi	r30, 0x92	; 146
+ 2fc:	f0 e0       	ldi	r31, 0x00	; 0
+ 2fe:	81 e0       	ldi	r24, 0x01	; 1
+ 300:	80 83       	st	Z, r24
+                current_status.rising = true;
+ 302:	85 83       	std	Z+5, r24	; 0x05
+            }
+            if( calcNextPhasor(delta) )
+ 304:	ce 01       	movw	r24, r28
+ 306:	05 df       	rcall	.-502    	; 0x112 <calcNextPhasor>
+ 308:	88 23       	and	r24, r24
+ 30a:	21 f0       	breq	.+8      	; 0x314 <togglingFSM+0x7c>
+            {
+                current_status.st = eIDLE;
+ 30c:	10 92 92 00 	sts	0x0092, r1
+ 310:	01 c0       	rjmp	.+2      	; 0x314 <togglingFSM+0x7c>
+ 312:	ff cf       	rjmp	.-2      	; 0x312 <togglingFSM+0x7a>
+            // debugger catch for invalid states
+            while(1);
+        }
+    }
+    
+    current_status.us_val =  scalePhasor();
+ 314:	56 df       	rcall	.-340    	; 0x1c2 <scalePhasor>
+ 316:	aa 27       	eor	r26, r26
+ 318:	97 fd       	sbrc	r25, 7
+ 31a:	a0 95       	com	r26
+ 31c:	ba 2f       	mov	r27, r26
+ 31e:	80 93 98 00 	sts	0x0098, r24
+ 322:	90 93 99 00 	sts	0x0099, r25
+ 326:	a0 93 9a 00 	sts	0x009A, r26
+ 32a:	b0 93 9b 00 	sts	0x009B, r27
+    
+}
+ 32e:	df 91       	pop	r29
+ 330:	cf 91       	pop	r28
+ 332:	08 95       	ret
+
+00000334 <astableFSM>:
+
+/* void astableFSM()
+  astable - runs back & forth while switch is held
+*/
+void astableFSM()
+{
+ 334:	cf 93       	push	r28
+ 336:	df 93       	push	r29
+	int16_t delta;
+	
+	delta = calcDelta();
+ 338:	90 de       	rcall	.-736    	; 0x5a <calcDelta>
+ 33a:	ec 01       	movw	r28, r24
+	
+    bool edge = edgeDetect();
+ 33c:	94 df       	rcall	.-216    	; 0x266 <edgeDetect>
+    
+	switch(current_status.st)
+ 33e:	80 91 92 00 	lds	r24, 0x0092
+ 342:	81 30       	cpi	r24, 0x01	; 1
+ 344:	69 f0       	breq	.+26     	; 0x360 <astableFSM+0x2c>
+ 346:	81 30       	cpi	r24, 0x01	; 1
+ 348:	28 f0       	brcs	.+10     	; 0x354 <astableFSM+0x20>
+ 34a:	82 30       	cpi	r24, 0x02	; 2
+ 34c:	99 f0       	breq	.+38     	; 0x374 <astableFSM+0x40>
+ 34e:	83 30       	cpi	r24, 0x03	; 3
+ 350:	b9 f0       	breq	.+46     	; 0x380 <astableFSM+0x4c>
+ 352:	2c c0       	rjmp	.+88     	; 0x3ac <astableFSM+0x78>
+	{
+    	case eIDLE:
+    	{
+        	// Advance regardless of switch state
+        	
+            current_status.st = eATOB;
+ 354:	e2 e9       	ldi	r30, 0x92	; 146
+ 356:	f0 e0       	ldi	r31, 0x00	; 0
+ 358:	81 e0       	ldi	r24, 0x01	; 1
+ 35a:	80 83       	st	Z, r24
+            current_status.rising         = true;
+ 35c:	85 83       	std	Z+5, r24	; 0x05
+ 35e:	27 c0       	rjmp	.+78     	; 0x3ae <astableFSM+0x7a>
+    	}
+    	break;
+    	case eATOB:
+    	{
+            //when we hit the top, go to falling state
+			if( calcNextPhasor(delta) )
+ 360:	ce 01       	movw	r24, r28
+ 362:	d7 de       	rcall	.-594    	; 0x112 <calcNextPhasor>
+ 364:	88 23       	and	r24, r24
+ 366:	19 f1       	breq	.+70     	; 0x3ae <astableFSM+0x7a>
+        	{
+            	current_status.st = eBTOA;
+ 368:	e2 e9       	ldi	r30, 0x92	; 146
+ 36a:	f0 e0       	ldi	r31, 0x00	; 0
+ 36c:	83 e0       	ldi	r24, 0x03	; 3
+ 36e:	80 83       	st	Z, r24
+            	current_status.rising         = false;
+ 370:	15 82       	std	Z+5, r1	; 0x05
+ 372:	1d c0       	rjmp	.+58     	; 0x3ae <astableFSM+0x7a>
+            	current_status.st = eIDLE;
+            	current_status.rising         = false;
+        	}
+            
+            // Just fall through
+        	current_status.st = eBTOA;
+ 374:	e2 e9       	ldi	r30, 0x92	; 146
+ 376:	f0 e0       	ldi	r31, 0x00	; 0
+ 378:	83 e0       	ldi	r24, 0x03	; 3
+ 37a:	80 83       	st	Z, r24
+        	current_status.rising         = false;
+ 37c:	15 82       	std	Z+5, r1	; 0x05
+ 37e:	17 c0       	rjmp	.+46     	; 0x3ae <astableFSM+0x7a>
+    	break;
+    	case eBTOA:
+    	{
+        	// dropping down to A
+        	// only quits when it gets there - ignores switch
+        	if( calcNextPhasor(delta) )
+ 380:	ce 01       	movw	r24, r28
+ 382:	c7 de       	rcall	.-626    	; 0x112 <calcNextPhasor>
+ 384:	88 23       	and	r24, r24
+ 386:	99 f0       	breq	.+38     	; 0x3ae <astableFSM+0x7a>
+        	{
+            	current_status.st = eATOB;
+ 388:	e2 e9       	ldi	r30, 0x92	; 146
+ 38a:	f0 e0       	ldi	r31, 0x00	; 0
+ 38c:	81 e0       	ldi	r24, 0x01	; 1
+ 38e:	80 83       	st	Z, r24
+  	        	current_status.rising         = true;
+ 390:	85 83       	std	Z+5, r24	; 0x05
+				current_status.sleepctr++;
+ 392:	3a 96       	adiw	r30, 0x0a	; 10
+ 394:	80 81       	ld	r24, Z
+ 396:	91 81       	ldd	r25, Z+1	; 0x01
+ 398:	a2 81       	ldd	r26, Z+2	; 0x02
+ 39a:	b3 81       	ldd	r27, Z+3	; 0x03
+ 39c:	01 96       	adiw	r24, 0x01	; 1
+ 39e:	a1 1d       	adc	r26, r1
+ 3a0:	b1 1d       	adc	r27, r1
+ 3a2:	80 83       	st	Z, r24
+ 3a4:	91 83       	std	Z+1, r25	; 0x01
+ 3a6:	a2 83       	std	Z+2, r26	; 0x02
+ 3a8:	b3 83       	std	Z+3, r27	; 0x03
+ 3aa:	01 c0       	rjmp	.+2      	; 0x3ae <astableFSM+0x7a>
+ 3ac:	ff cf       	rjmp	.-2      	; 0x3ac <astableFSM+0x78>
+    	}
+	}
+    
+    
+
+	current_status.us_val =  scalePhasor();
+ 3ae:	09 df       	rcall	.-494    	; 0x1c2 <scalePhasor>
+ 3b0:	aa 27       	eor	r26, r26
+ 3b2:	97 fd       	sbrc	r25, 7
+ 3b4:	a0 95       	com	r26
+ 3b6:	ba 2f       	mov	r27, r26
+ 3b8:	80 93 98 00 	sts	0x0098, r24
+ 3bc:	90 93 99 00 	sts	0x0099, r25
+ 3c0:	a0 93 9a 00 	sts	0x009A, r26
+ 3c4:	b0 93 9b 00 	sts	0x009B, r27
+	
+}
+ 3c8:	df 91       	pop	r29
+ 3ca:	cf 91       	pop	r28
+ 3cc:	08 95       	ret
+
+000003ce <readADC>:
+// monostable - like one-shot, but doesn't have to complete cycle is released before it reaches B?
+
+
+// Read a given channel of ADC.
+uint32_t readADC(uint8_t chan)
+{
+ 3ce:	df 93       	push	r29
+ 3d0:	cf 93       	push	r28
+ 3d2:	0f 92       	push	r0
+ 3d4:	cd b7       	in	r28, 0x3d	; 61
+ 3d6:	de b7       	in	r29, 0x3e	; 62
+ 3d8:	98 2f       	mov	r25, r24
+	uint32_t value;
+	
+	// only allow the pins we've selected to read...
+	if(!( (chan == POTA_CHAN) || (chan == POTB_CHAN) || (chan == POTT_CHAN)))
+ 3da:	88 23       	and	r24, r24
+ 3dc:	49 f0       	breq	.+18     	; 0x3f0 <readADC+0x22>
+ 3de:	83 30       	cpi	r24, 0x03	; 3
+ 3e0:	39 f0       	breq	.+14     	; 0x3f0 <readADC+0x22>
+ 3e2:	87 30       	cpi	r24, 0x07	; 7
+ 3e4:	29 f0       	breq	.+10     	; 0x3f0 <readADC+0x22>
+ 3e6:	20 e0       	ldi	r18, 0x00	; 0
+ 3e8:	30 e0       	ldi	r19, 0x00	; 0
+ 3ea:	40 e0       	ldi	r20, 0x00	; 0
+ 3ec:	50 e0       	ldi	r21, 0x00	; 0
+ 3ee:	29 c0       	rjmp	.+82     	; 0x442 <readADC+0x74>
+		return 0;
+	}
+	
+	// turn on adc
+	// TODO: perhaps turn on and leave on?
+	ADCSRA = 0x86; // power bit, prescale of 64
+ 3f0:	86 e8       	ldi	r24, 0x86	; 134
+ 3f2:	86 b9       	out	0x06, r24	; 6
+	
+	ADCSRB |= 0x10; // left justify
+ 3f4:	e3 e2       	ldi	r30, 0x23	; 35
+ 3f6:	f0 e0       	ldi	r31, 0x00	; 0
+ 3f8:	80 81       	ld	r24, Z
+ 3fa:	80 61       	ori	r24, 0x10	; 16
+ 3fc:	80 83       	st	Z, r24
+	
+	// set digital input disable
+	DIDR0 = 0x89;
+ 3fe:	89 e8       	ldi	r24, 0x89	; 137
+ 400:	81 b9       	out	0x01, r24	; 1
+	
+	// input mux, vref selection
+	ADMUX = chan;
+ 402:	97 b9       	out	0x07, r25	; 7
+
+	// pause a moment...
+	for(volatile uint8_t i = 0xff; i != 0; i--);
+ 404:	8f ef       	ldi	r24, 0xFF	; 255
+ 406:	89 83       	std	Y+1, r24	; 0x01
+ 408:	89 81       	ldd	r24, Y+1	; 0x01
+ 40a:	88 23       	and	r24, r24
+ 40c:	31 f0       	breq	.+12     	; 0x41a <readADC+0x4c>
+ 40e:	89 81       	ldd	r24, Y+1	; 0x01
+ 410:	81 50       	subi	r24, 0x01	; 1
+ 412:	89 83       	std	Y+1, r24	; 0x01
+ 414:	89 81       	ldd	r24, Y+1	; 0x01
+ 416:	88 23       	and	r24, r24
+ 418:	d1 f7       	brne	.-12     	; 0x40e <readADC+0x40>
+	
+	// bit 6 starts conversion
+	// write bit 4 to clear it
+	ADCSRA |= 0x50;
+ 41a:	e6 e2       	ldi	r30, 0x26	; 38
+ 41c:	f0 e0       	ldi	r31, 0x00	; 0
+ 41e:	80 81       	ld	r24, Z
+ 420:	80 65       	ori	r24, 0x50	; 80
+ 422:	80 83       	st	Z, r24
+	//ADCSRA = 0x40;
+	
+	// start bit clears when complete
+	while(ADCSRA & 0x40);
+ 424:	80 81       	ld	r24, Z
+ 426:	86 fd       	sbrc	r24, 6
+ 428:	fd cf       	rjmp	.-6      	; 0x424 <readADC+0x56>
+
+	value = ADCW;
+ 42a:	84 b1       	in	r24, 0x04	; 4
+ 42c:	95 b1       	in	r25, 0x05	; 5
+	
+    // Pots seem to act backwards, so reverse these readings
+	return (0xffff - value);
+ 42e:	a0 e0       	ldi	r26, 0x00	; 0
+ 430:	b0 e0       	ldi	r27, 0x00	; 0
+ 432:	2f ef       	ldi	r18, 0xFF	; 255
+ 434:	3f ef       	ldi	r19, 0xFF	; 255
+ 436:	40 e0       	ldi	r20, 0x00	; 0
+ 438:	50 e0       	ldi	r21, 0x00	; 0
+ 43a:	28 1b       	sub	r18, r24
+ 43c:	39 0b       	sbc	r19, r25
+ 43e:	4a 0b       	sbc	r20, r26
+ 440:	5b 0b       	sbc	r21, r27
+}
+ 442:	62 2f       	mov	r22, r18
+ 444:	73 2f       	mov	r23, r19
+ 446:	84 2f       	mov	r24, r20
+ 448:	95 2f       	mov	r25, r21
+ 44a:	0f 90       	pop	r0
+ 44c:	cf 91       	pop	r28
+ 44e:	df 91       	pop	r29
+ 450:	08 95       	ret
+
+00000452 <readInputs>:
+
+    Read the 3 pots and switch input.
+
+*/
+void readInputs()
+{
+ 452:	ef 92       	push	r14
+ 454:	ff 92       	push	r15
+ 456:	0f 93       	push	r16
+ 458:	1f 93       	push	r17
+	// read pots
+	current_status.a = readADC(POTA_CHAN);
+ 45a:	80 e0       	ldi	r24, 0x00	; 0
+ 45c:	b8 df       	rcall	.-144    	; 0x3ce <readADC>
+ 45e:	0f 2e       	mov	r0, r31
+ 460:	f3 e8       	ldi	r31, 0x83	; 131
+ 462:	ef 2e       	mov	r14, r31
+ 464:	f0 e0       	ldi	r31, 0x00	; 0
+ 466:	ff 2e       	mov	r15, r31
+ 468:	f0 2d       	mov	r31, r0
+ 46a:	f7 01       	movw	r30, r14
+ 46c:	61 93       	st	Z+, r22
+ 46e:	71 93       	st	Z+, r23
+ 470:	81 93       	st	Z+, r24
+ 472:	91 93       	st	Z+, r25
+ 474:	8f 01       	movw	r16, r30
+	current_status.b = readADC(POTB_CHAN);
+ 476:	83 e0       	ldi	r24, 0x03	; 3
+ 478:	aa df       	rcall	.-172    	; 0x3ce <readADC>
+ 47a:	f8 01       	movw	r30, r16
+ 47c:	60 83       	st	Z, r22
+ 47e:	71 83       	std	Z+1, r23	; 0x01
+ 480:	82 83       	std	Z+2, r24	; 0x02
+ 482:	93 83       	std	Z+3, r25	; 0x03
+	current_status.t = readADC(POTT_CHAN);
+ 484:	87 e0       	ldi	r24, 0x07	; 7
+ 486:	a3 df       	rcall	.-186    	; 0x3ce <readADC>
+ 488:	f7 01       	movw	r30, r14
+ 48a:	60 87       	std	Z+8, r22	; 0x08
+ 48c:	71 87       	std	Z+9, r23	; 0x09
+ 48e:	82 87       	std	Z+10, r24	; 0x0a
+ 490:	93 87       	std	Z+11, r25	; 0x0b
+			
+    // Input can be jumpered for active low or active high.
+    // We'll correct for that here
+	if(current_status.input_polarity)
+ 492:	86 85       	ldd	r24, Z+14	; 0x0e
+ 494:	88 23       	and	r24, r24
+ 496:	39 f0       	breq	.+14     	; 0x4a6 <readInputs+0x54>
+	{
+		// default = active low or switch closure
+		// read switch - active low, so invert level
+		current_status.input = !(PINA & TRIG_PIN_A_MASK);
+ 498:	89 b3       	in	r24, 0x19	; 25
+ 49a:	86 95       	lsr	r24
+ 49c:	80 95       	com	r24
+ 49e:	81 70       	andi	r24, 0x01	; 1
+ 4a0:	80 93 8f 00 	sts	0x008F, r24
+ 4a4:	07 c0       	rjmp	.+14     	; 0x4b4 <readInputs+0x62>
+	}
+	else
+	{
+		// active high
+		current_status.input = (PINA & TRIG_PIN_A_MASK);
+ 4a6:	89 b3       	in	r24, 0x19	; 25
+ 4a8:	90 e0       	ldi	r25, 0x00	; 0
+ 4aa:	96 95       	lsr	r25
+ 4ac:	87 95       	ror	r24
+ 4ae:	81 70       	andi	r24, 0x01	; 1
+ 4b0:	80 93 8f 00 	sts	0x008F, r24
+	}
+}
+ 4b4:	1f 91       	pop	r17
+ 4b6:	0f 91       	pop	r16
+ 4b8:	ff 90       	pop	r15
+ 4ba:	ef 90       	pop	r14
+ 4bc:	08 95       	ret
+
+000004be <__vector_5>:
+    Called when the PWM timer is restarted.
+    The PWM output is set when counter is reset.
+    We need to calculate when that output will be cleared.
+*/
+ISR(TIM1_CAPT_vect)
+{
+ 4be:	1f 92       	push	r1
+ 4c0:	0f 92       	push	r0
+ 4c2:	0f b6       	in	r0, 0x3f	; 63
+ 4c4:	0f 92       	push	r0
+ 4c6:	11 24       	eor	r1, r1
+ 4c8:	0f 93       	push	r16
+ 4ca:	1f 93       	push	r17
+ 4cc:	2f 93       	push	r18
+ 4ce:	3f 93       	push	r19
+ 4d0:	4f 93       	push	r20
+ 4d2:	5f 93       	push	r21
+ 4d4:	6f 93       	push	r22
+ 4d6:	7f 93       	push	r23
+ 4d8:	8f 93       	push	r24
+ 4da:	9f 93       	push	r25
+ 4dc:	af 93       	push	r26
+ 4de:	bf 93       	push	r27
+ 4e0:	ef 93       	push	r30
+ 4e2:	ff 93       	push	r31
+	// no hardware source to reset - flag is cleared on execution of this vector
+	
+	// set the pulse width based on switch and pot positions.
+    //
+    // run the FSM - it'll calculate the next value for the uSec timer
+	if(current_status.mode)
+ 4e4:	80 91 90 00 	lds	r24, 0x0090
+ 4e8:	88 23       	and	r24, r24
+ 4ea:	11 f0       	breq	.+4      	; 0x4f0 <__vector_5+0x32>
+	{
+		FSMA();
+ 4ec:	23 df       	rcall	.-442    	; 0x334 <astableFSM>
+ 4ee:	01 c0       	rjmp	.+2      	; 0x4f2 <__vector_5+0x34>
+	}
+	else
+	{
+        FSMB();
+ 4f0:	d3 de       	rcall	.-602    	; 0x298 <togglingFSM>
+	}
+	
+    // Apply the uSec timer to the PWM hardware.
+	OCR1A = PWM_MIN_USEC + current_status.us_val;
+ 4f2:	08 e9       	ldi	r16, 0x98	; 152
+ 4f4:	10 e0       	ldi	r17, 0x00	; 0
+ 4f6:	f8 01       	movw	r30, r16
+ 4f8:	80 81       	ld	r24, Z
+ 4fa:	91 81       	ldd	r25, Z+1	; 0x01
+ 4fc:	88 51       	subi	r24, 0x18	; 24
+ 4fe:	9c 4f       	sbci	r25, 0xFC	; 252
+ 500:	9b bd       	out	0x2b, r25	; 43
+ 502:	8a bd       	out	0x2a, r24	; 42
+
+	// Then read and prepare for next invocation	
+	readInputs();
+ 504:	a6 df       	rcall	.-180    	; 0x452 <readInputs>
+	
+	//check sleep counter and disable PWM and interupts
+	if(current_status.sleepctr > SLEEP_CTR)
+ 506:	f8 01       	movw	r30, r16
+ 508:	84 81       	ldd	r24, Z+4	; 0x04
+ 50a:	95 81       	ldd	r25, Z+5	; 0x05
+ 50c:	a6 81       	ldd	r26, Z+6	; 0x06
+ 50e:	b7 81       	ldd	r27, Z+7	; 0x07
+ 510:	8d 52       	subi	r24, 0x2D	; 45
+ 512:	91 40       	sbci	r25, 0x01	; 1
+ 514:	a0 40       	sbci	r26, 0x00	; 0
+ 516:	b0 40       	sbci	r27, 0x00	; 0
+ 518:	1c f0       	brlt	.+6      	; 0x520 <__vector_5+0x62>
+	{
+		//disable interrupts
+		cli();
+ 51a:	f8 94       	cli
+		
+		//disable PWM on channel A
+		TCCR1A = 0;
+ 51c:	1f bc       	out	0x2f, r1	; 47
+		
+		//set all output to low
+		PORTA = 0;
+ 51e:	1b ba       	out	0x1b, r1	; 27
+		
+		//
+	}
+
+}
+ 520:	ff 91       	pop	r31
+ 522:	ef 91       	pop	r30
+ 524:	bf 91       	pop	r27
+ 526:	af 91       	pop	r26
+ 528:	9f 91       	pop	r25
+ 52a:	8f 91       	pop	r24
+ 52c:	7f 91       	pop	r23
+ 52e:	6f 91       	pop	r22
+ 530:	5f 91       	pop	r21
+ 532:	4f 91       	pop	r20
+ 534:	3f 91       	pop	r19
+ 536:	2f 91       	pop	r18
+ 538:	1f 91       	pop	r17
+ 53a:	0f 91       	pop	r16
+ 53c:	0f 90       	pop	r0
+ 53e:	0f be       	out	0x3f, r0	; 63
+ 540:	0f 90       	pop	r0
+ 542:	1f 90       	pop	r1
+ 544:	18 95       	reti
+
+00000546 <setupPWM>:
+*/
+void setupPWM(void)
+{
+	// holdoff timer prescalar counting while we configure
+	// This disables the peripheral
+	GTCCR = 1 << TSM;
+ 546:	a3 e4       	ldi	r26, 0x43	; 67
+ 548:	b0 e0       	ldi	r27, 0x00	; 0
+ 54a:	80 e8       	ldi	r24, 0x80	; 128
+ 54c:	8c 93       	st	X, r24
+
+	// Enable timer output compare A bit as output
+	DDRA |= 0x40;
+ 54e:	ea e3       	ldi	r30, 0x3A	; 58
+ 550:	f0 e0       	ldi	r31, 0x00	; 0
+ 552:	80 81       	ld	r24, Z
+ 554:	80 64       	ori	r24, 0x40	; 64
+ 556:	80 83       	st	Z, r24
+	// Bits 7,6 - Output compare mode chan A = 0b10 = clear output on match, set output at bottom
+	// Bits 5,4 - Output compare mode chan B = 0b00 = disconnected
+	// Bits 3,2 - RFU
+	// Bits 1,0 - Waveform gen mode LSBs 11,10 : 0b10 
+	// WGM = fast pwm, top is ICR1
+	TCCR1A = 0x82;
+ 558:	82 e8       	ldi	r24, 0x82	; 130
+ 55a:	8f bd       	out	0x2f, r24	; 47
+	// Bit 7 - input noice calcel = 0b0 = off
+	// bit 6 - input capture edge sel = off
+	// bit 5 - RFU
+	// bits 4:3 - WGM MSBs = 0b11
+	// bits 2:0 - clk scale: 0b010 = IO clk div by 8 = 1 mHz.
+	TCCR1B = 0x1a; 
+ 55c:	8a e1       	ldi	r24, 0x1A	; 26
+ 55e:	8e bd       	out	0x2e, r24	; 46
+	
+	// set control reg C
+	// Force output compare - inactive in PWM modes.
+	TCCR1C = 0;
+ 560:	12 bc       	out	0x22, r1	; 34
+
+	// Start with no interrupts
+	TIMSK1 = 0;
+ 562:	ec e2       	ldi	r30, 0x2C	; 44
+ 564:	f0 e0       	ldi	r31, 0x00	; 0
+ 566:	10 82       	st	Z, r1
+
+	// ICR1 is 16-bit reg.  In Fast PWM, it sets the TOP value for the counter.
+	// 50 Hz = 20000 1 mHz pulses.
+	ICR1 = 20000-1;
+ 568:	8f e1       	ldi	r24, 0x1F	; 31
+ 56a:	9e e4       	ldi	r25, 0x4E	; 78
+ 56c:	95 bd       	out	0x25, r25	; 37
+ 56e:	84 bd       	out	0x24, r24	; 36
+	
+	// initialize the counter at 0.
+	TCNT1 = 0x0;
+ 570:	1d bc       	out	0x2d, r1	; 45
+ 572:	1c bc       	out	0x2c, r1	; 44
+	
+	// Initialize the output compare for 1000 clock pulses (1 millisecond)
+	OCR1A = 1000;
+ 574:	88 ee       	ldi	r24, 0xE8	; 232
+ 576:	93 e0       	ldi	r25, 0x03	; 3
+ 578:	9b bd       	out	0x2b, r25	; 43
+ 57a:	8a bd       	out	0x2a, r24	; 42
+
+	// enable interrupt on capture (period)
+	TIMSK1 = 0x20;
+ 57c:	80 e2       	ldi	r24, 0x20	; 32
+ 57e:	80 83       	st	Z, r24
+
+	// reset & restart prescalar counter
+	// Writing 0 to TSM (bit 7) causes counter to start counting,
+	// Writing 1 to PSR10 (bit 0) causes prescalar to reset, starting prescale from 0
+	GTCCR = 1 << PSR10;
+ 580:	81 e0       	ldi	r24, 0x01	; 1
+ 582:	8c 93       	st	X, r24
+}
+ 584:	08 95       	ret
+
+00000586 <main>:
+	//PORTA |= 0x00;
+	
+	// Configure clock scaling.
+	// 2-step procedure to keep stray pointers from mangling the value.
+	// Using 16 mHz resonator, we'll divide by 2 for 8 MHz.
+	CLKPR = 0x80;
+ 586:	e6 e4       	ldi	r30, 0x46	; 70
+ 588:	f0 e0       	ldi	r31, 0x00	; 0
+ 58a:	80 e8       	ldi	r24, 0x80	; 128
+ 58c:	80 83       	st	Z, r24
+	CLKPR = 0x01; // clk div 2 = 8 MHz.
+ 58e:	81 e0       	ldi	r24, 0x01	; 1
+ 590:	80 83       	st	Z, r24
+	
+	setupPWM();
+ 592:	d9 df       	rcall	.-78     	; 0x546 <setupPWM>
+	//     pulled up = bistable
+	//     grounded  = monostable.
+	// Polarity indicates polarity of the switch/ pulse input. 
+	//     pulled up = active low or switch closure
+	//     grounded  = active high, no pull.
+	current_status.mode = (PINB & MODESEL_B_MASK);
+ 594:	86 b3       	in	r24, 0x16	; 22
+ 596:	90 e0       	ldi	r25, 0x00	; 0
+ 598:	96 95       	lsr	r25
+ 59a:	87 95       	ror	r24
+ 59c:	96 95       	lsr	r25
+ 59e:	87 95       	ror	r24
+ 5a0:	81 70       	andi	r24, 0x01	; 1
+ 5a2:	e0 e9       	ldi	r30, 0x90	; 144
+ 5a4:	f0 e0       	ldi	r31, 0x00	; 0
+ 5a6:	81 93       	st	Z+, r24
+	current_status.input_polarity = ( PINA & POLSEL_A_MASK);
+ 5a8:	89 b3       	in	r24, 0x19	; 25
+ 5aa:	90 e0       	ldi	r25, 0x00	; 0
+ 5ac:	96 95       	lsr	r25
+ 5ae:	87 95       	ror	r24
+ 5b0:	96 95       	lsr	r25
+ 5b2:	87 95       	ror	r24
+ 5b4:	81 70       	andi	r24, 0x01	; 1
+ 5b6:	80 83       	st	Z, r24
+	
+	// set up input button pin
+	if(current_status.input_polarity)
+ 5b8:	88 23       	and	r24, r24
+ 5ba:	59 f0       	breq	.+22     	; 0x5d2 <main+0x4c>
+	{
+		// Pulled up, active low.
+		DDRA &= ~0x02; // PA1 as input
+ 5bc:	ea e3       	ldi	r30, 0x3A	; 58
+ 5be:	f0 e0       	ldi	r31, 0x00	; 0
+ 5c0:	80 81       	ld	r24, Z
+ 5c2:	8d 7f       	andi	r24, 0xFD	; 253
+ 5c4:	80 83       	st	Z, r24
+		PORTA |= 0x02; // pulled up
+ 5c6:	eb e3       	ldi	r30, 0x3B	; 59
+ 5c8:	f0 e0       	ldi	r31, 0x00	; 0
+ 5ca:	80 81       	ld	r24, Z
+ 5cc:	82 60       	ori	r24, 0x02	; 2
+ 5ce:	80 83       	st	Z, r24
+ 5d0:	05 c0       	rjmp	.+10     	; 0x5dc <main+0x56>
+		
+	}
+	else
+	{
+		// Active high, no pull.
+		DDRA &= ~0x02; // PA1 as input
+ 5d2:	ea e3       	ldi	r30, 0x3A	; 58
+ 5d4:	f0 e0       	ldi	r31, 0x00	; 0
+ 5d6:	80 81       	ld	r24, Z
+ 5d8:	8d 7f       	andi	r24, 0xFD	; 253
+ 5da:	80 83       	st	Z, r24
+	}
+
+	// initialize global data
+	current_status.input  = false;
+ 5dc:	ef e8       	ldi	r30, 0x8F	; 143
+ 5de:	f0 e0       	ldi	r31, 0x00	; 0
+ 5e0:	10 82       	st	Z, r1
+	current_status.st     = eIDLE;
+ 5e2:	13 82       	std	Z+3, r1	; 0x03
+	current_status.phasor = 0;
+ 5e4:	14 82       	std	Z+4, r1	; 0x04
+ 5e6:	15 82       	std	Z+5, r1	; 0x05
+ 5e8:	16 82       	std	Z+6, r1	; 0x06
+ 5ea:	17 82       	std	Z+7, r1	; 0x07
+	current_status.rising = true;
+ 5ec:	81 e0       	ldi	r24, 0x01	; 1
+ 5ee:	80 87       	std	Z+8, r24	; 0x08
+	current_status.sleepctr = 0;
+ 5f0:	15 86       	std	Z+13, r1	; 0x0d
+ 5f2:	16 86       	std	Z+14, r1	; 0x0e
+ 5f4:	17 86       	std	Z+15, r1	; 0x0f
+ 5f6:	10 8a       	std	Z+16, r1	; 0x10
+
+	// Read all of the inputs one before we enable the FSM,
+	// so it doesn't start with invalid data.
+	readInputs();
+ 5f8:	2c df       	rcall	.-424    	; 0x452 <readInputs>
+
+	// Turn off some peripherals that we're not using.
+	PRR |= 0x06;//turn off USI and TIM0.
+ 5fa:	e0 e2       	ldi	r30, 0x20	; 32
+ 5fc:	f0 e0       	ldi	r31, 0x00	; 0
+ 5fe:	80 81       	ld	r24, Z
+ 600:	86 60       	ori	r24, 0x06	; 6
+ 602:	80 83       	st	Z, r24
+
+	// then enable interrupts
+	sei();
+ 604:	78 94       	sei
+    {
+        // The real action all takes place in the PWM ISR.
+        
+		// Not sure how much difference this was making...maybe a couple mA?
+		// We have to leave the timer running, so we can only idle...
+		sleep_enable();
+ 606:	e5 e5       	ldi	r30, 0x55	; 85
+ 608:	f0 e0       	ldi	r31, 0x00	; 0
+ 60a:	80 81       	ld	r24, Z
+ 60c:	80 62       	ori	r24, 0x20	; 32
+ 60e:	80 83       	st	Z, r24
+		set_sleep_mode(SLEEP_MODE_IDLE);
+ 610:	80 81       	ld	r24, Z
+ 612:	87 7e       	andi	r24, 0xE7	; 231
+ 614:	80 83       	st	Z, r24
+		sleep_mode();
+ 616:	80 81       	ld	r24, Z
+ 618:	80 62       	ori	r24, 0x20	; 32
+ 61a:	80 83       	st	Z, r24
+ 61c:	88 95       	sleep
+ 61e:	80 81       	ld	r24, Z
+ 620:	8f 7d       	andi	r24, 0xDF	; 223
+ 622:	80 83       	st	Z, r24
+ 624:	f2 cf       	rjmp	.-28     	; 0x60a <main+0x84>
+
+00000626 <__mulsi3>:
+ 626:	ff 27       	eor	r31, r31
+ 628:	ee 27       	eor	r30, r30
+ 62a:	bb 27       	eor	r27, r27
+ 62c:	aa 27       	eor	r26, r26
+
+0000062e <__mulsi3_loop>:
+ 62e:	60 ff       	sbrs	r22, 0
+ 630:	04 c0       	rjmp	.+8      	; 0x63a <__mulsi3_skip1>
+ 632:	a2 0f       	add	r26, r18
+ 634:	b3 1f       	adc	r27, r19
+ 636:	e4 1f       	adc	r30, r20
+ 638:	f5 1f       	adc	r31, r21
+
+0000063a <__mulsi3_skip1>:
+ 63a:	22 0f       	add	r18, r18
+ 63c:	33 1f       	adc	r19, r19
+ 63e:	44 1f       	adc	r20, r20
+ 640:	55 1f       	adc	r21, r21
+ 642:	96 95       	lsr	r25
+ 644:	87 95       	ror	r24
+ 646:	77 95       	ror	r23
+ 648:	67 95       	ror	r22
+ 64a:	89 f7       	brne	.-30     	; 0x62e <__mulsi3_loop>
+ 64c:	00 97       	sbiw	r24, 0x00	; 0
+ 64e:	76 07       	cpc	r23, r22
+ 650:	71 f7       	brne	.-36     	; 0x62e <__mulsi3_loop>
+
+00000652 <__mulsi3_exit>:
+ 652:	cf 01       	movw	r24, r30
+ 654:	bd 01       	movw	r22, r26
+ 656:	08 95       	ret
+
+00000658 <__divmodsi4>:
+ 658:	97 fb       	bst	r25, 7
+ 65a:	09 2e       	mov	r0, r25
+ 65c:	05 26       	eor	r0, r21
+ 65e:	0e d0       	rcall	.+28     	; 0x67c <__divmodsi4_neg1>
+ 660:	57 fd       	sbrc	r21, 7
+ 662:	04 d0       	rcall	.+8      	; 0x66c <__divmodsi4_neg2>
+ 664:	14 d0       	rcall	.+40     	; 0x68e <__udivmodsi4>
+ 666:	0a d0       	rcall	.+20     	; 0x67c <__divmodsi4_neg1>
+ 668:	00 1c       	adc	r0, r0
+ 66a:	38 f4       	brcc	.+14     	; 0x67a <__divmodsi4_exit>
+
+0000066c <__divmodsi4_neg2>:
+ 66c:	50 95       	com	r21
+ 66e:	40 95       	com	r20
+ 670:	30 95       	com	r19
+ 672:	21 95       	neg	r18
+ 674:	3f 4f       	sbci	r19, 0xFF	; 255
+ 676:	4f 4f       	sbci	r20, 0xFF	; 255
+ 678:	5f 4f       	sbci	r21, 0xFF	; 255
+
+0000067a <__divmodsi4_exit>:
+ 67a:	08 95       	ret
+
+0000067c <__divmodsi4_neg1>:
+ 67c:	f6 f7       	brtc	.-4      	; 0x67a <__divmodsi4_exit>
+ 67e:	90 95       	com	r25
+ 680:	80 95       	com	r24
+ 682:	70 95       	com	r23
+ 684:	61 95       	neg	r22
+ 686:	7f 4f       	sbci	r23, 0xFF	; 255
+ 688:	8f 4f       	sbci	r24, 0xFF	; 255
+ 68a:	9f 4f       	sbci	r25, 0xFF	; 255
+ 68c:	08 95       	ret
+
+0000068e <__udivmodsi4>:
+ 68e:	a1 e2       	ldi	r26, 0x21	; 33
+ 690:	1a 2e       	mov	r1, r26
+ 692:	aa 1b       	sub	r26, r26
+ 694:	bb 1b       	sub	r27, r27
+ 696:	fd 01       	movw	r30, r26
+ 698:	0d c0       	rjmp	.+26     	; 0x6b4 <__udivmodsi4_ep>
+
+0000069a <__udivmodsi4_loop>:
+ 69a:	aa 1f       	adc	r26, r26
+ 69c:	bb 1f       	adc	r27, r27
+ 69e:	ee 1f       	adc	r30, r30
+ 6a0:	ff 1f       	adc	r31, r31
+ 6a2:	a2 17       	cp	r26, r18
+ 6a4:	b3 07       	cpc	r27, r19
+ 6a6:	e4 07       	cpc	r30, r20
+ 6a8:	f5 07       	cpc	r31, r21
+ 6aa:	20 f0       	brcs	.+8      	; 0x6b4 <__udivmodsi4_ep>
+ 6ac:	a2 1b       	sub	r26, r18
+ 6ae:	b3 0b       	sbc	r27, r19
+ 6b0:	e4 0b       	sbc	r30, r20
+ 6b2:	f5 0b       	sbc	r31, r21
+
+000006b4 <__udivmodsi4_ep>:
+ 6b4:	66 1f       	adc	r22, r22
+ 6b6:	77 1f       	adc	r23, r23
+ 6b8:	88 1f       	adc	r24, r24
+ 6ba:	99 1f       	adc	r25, r25
+ 6bc:	1a 94       	dec	r1
+ 6be:	69 f7       	brne	.-38     	; 0x69a <__udivmodsi4_loop>
+ 6c0:	60 95       	com	r22
+ 6c2:	70 95       	com	r23
+ 6c4:	80 95       	com	r24
+ 6c6:	90 95       	com	r25
+ 6c8:	9b 01       	movw	r18, r22
+ 6ca:	ac 01       	movw	r20, r24
+ 6cc:	bd 01       	movw	r22, r26
+ 6ce:	cf 01       	movw	r24, r30
+ 6d0:	08 95       	ret
+
+000006d2 <_exit>:
+ 6d2:	f8 94       	cli
+
+000006d4 <__stop_program>:
+ 6d4:	ff cf       	rjmp	.-2      	; 0x6d4 <__stop_program>
